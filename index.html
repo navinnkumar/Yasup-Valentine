@@ -37,9 +37,12 @@
 
         .buttons {
             margin-top: 30px;
-            position: relative;
             display: flex;
             gap: 20px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            position: relative;
         }
 
         button {
@@ -51,7 +54,6 @@
             transition: 0.3s;
             font-family: 'Dancing Script', cursive;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            position: relative;
         }
 
         #yes {
@@ -67,11 +69,12 @@
         #no {
             background-color: #ccc;
             color: black;
-            transition: opacity 0.5s ease-in-out, transform 0.2s ease-in-out;
+            transition: transform 0.3s ease-in-out;
+            position: relative;
         }
 
         #rose {
-            font-size: 15vw;
+            font-size: 10vw;
             margin-top: 20px;
             display: none;
             opacity: 0;
@@ -88,21 +91,31 @@
             to { transform: translateY(-10px); }
         }
 
+        #wife-message {
+            font-size: 5vw;
+            color: white;
+            margin-top: 10px;
+            display: none;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out forwards;
+        }
+
         .heart-explosion {
             position: absolute;
             font-size: 5vw;
-            animation: heartFloat 2s ease-in-out forwards;
+            animation: heartFloat 4s linear infinite;
         }
 
         @keyframes heartFloat {
             from { transform: translateY(0) scale(0.5); opacity: 1; }
-            to { transform: translateY(-100px) scale(1.5); opacity: 0; }
+            to { transform: translateY(-100vh) scale(1.5); opacity: 0; }
         }
 
         @media (min-width: 768px) {
             h1 { font-size: 50px; }
             button { font-size: 24px; padding: 12px 24px; }
             #rose { font-size: 100px; }
+            #wife-message { font-size: 30px; }
             .heart-explosion { font-size: 50px; }
         }
     </style>
@@ -114,4 +127,47 @@
     <div class="buttons">
         <button id="yes" onclick="showLove()">Yes</button>
         <button id="no" onmouseover="moveButton()" onclick="moveButton()">No</button>
-   
+    </div>
+
+    <div id="rose">🌹</div>
+    <div id="wife-message">Thank you for making me your wife ❤️</div>
+
+    <audio id="romantic-music" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
+    </audio>
+
+    <script>
+        let moveCount = 0;
+
+        function moveButton() {
+            let button = document.getElementById("no");
+            let x = Math.random() * (window.innerWidth - 100);
+            let y = Math.random() * (window.innerHeight - 100);
+            button.style.transform = `translate(${x}px, ${y}px)`;
+            moveCount++;
+        }
+
+        function showLove() {
+            document.getElementById("yes").disabled = true;
+            document.getElementById("yes").style.opacity = "0.5";
+            document.getElementById("no").style.display = "none";
+            document.getElementById("rose").style.display = "block";
+            document.getElementById("wife-message").style.display = "block";
+
+            // Play music
+            document.getElementById("romantic-music").play();
+
+            setInterval(() => {
+                let heart = document.createElement("div");
+                heart.innerHTML = "❤️";
+                heart.classList.add("heart-explosion");
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.top = "100vh";
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 4000);
+            }, 300);
+        }
+    </script>
+
+</body>
+</html>
