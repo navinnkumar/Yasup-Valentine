@@ -18,13 +18,15 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            padding: 20px;
         }
 
         h1 {
-            font-size: 50px;
+            font-size: 8vw;
             color: white;
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
             animation: heartbeat 2s infinite;
+            max-width: 90%;
         }
 
         @keyframes heartbeat {
@@ -36,17 +38,20 @@
         .buttons {
             margin-top: 30px;
             position: relative;
+            display: flex;
+            gap: 20px;
         }
 
         button {
-            font-size: 22px;
-            padding: 12px 24px;
+            font-size: 5vw;
+            padding: 10px 20px;
             border: none;
             border-radius: 20px;
             cursor: pointer;
             transition: 0.3s;
             font-family: 'Dancing Script', cursive;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
         }
 
         #yes {
@@ -62,12 +67,11 @@
         #no {
             background-color: #ccc;
             color: black;
-            position: absolute;
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 0.5s ease-in-out, transform 0.2s ease-in-out;
         }
 
         #rose {
-            font-size: 100px;
+            font-size: 15vw;
             margin-top: 20px;
             display: none;
             opacity: 0;
@@ -86,13 +90,20 @@
 
         .heart-explosion {
             position: absolute;
-            font-size: 50px;
+            font-size: 5vw;
             animation: heartFloat 2s ease-in-out forwards;
         }
 
         @keyframes heartFloat {
             from { transform: translateY(0) scale(0.5); opacity: 1; }
             to { transform: translateY(-100px) scale(1.5); opacity: 0; }
+        }
+
+        @media (min-width: 768px) {
+            h1 { font-size: 50px; }
+            button { font-size: 24px; padding: 12px 24px; }
+            #rose { font-size: 100px; }
+            .heart-explosion { font-size: 50px; }
         }
     </style>
 </head>
@@ -103,36 +114,4 @@
     <div class="buttons">
         <button id="yes" onclick="showLove()">Yes</button>
         <button id="no" onmouseover="moveButton()" onclick="moveButton()">No</button>
-    </div>
-
-    <div id="rose">🌹</div>
-
-    <script>
-        function moveButton() {
-            let button = document.getElementById("no");
-            let x = Math.random() * (window.innerWidth - 150);
-            let y = Math.random() * (window.innerHeight - 100);
-            button.style.left = x + "px";
-            button.style.top = y + "px";
-        }
-
-        function showLove() {
-            alert('Yay! ❤️');
-            document.getElementById("rose").style.display = "block";
-            document.getElementById("no").style.opacity = "0";
-            setTimeout(() => document.getElementById("no").style.display = "none", 500);
-
-            for (let i = 0; i < 10; i++) {
-                let heart = document.createElement("div");
-                heart.innerHTML = "❤️";
-                heart.className = "heart-explosion";
-                heart.style.left = (50 + Math.random() * 40) + "%";
-                heart.style.top = "50%";
-                document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 2000);
-            }
-        }
-    </script>
-
-</body>
-</html>
+   
