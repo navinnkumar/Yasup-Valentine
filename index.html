@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+        body {
+            font-family: 'Dancing Script', cursive;
+            text-align: center;
+            background: linear-gradient(to bottom, #ff758c, #ff7eb3, #ff9a9e, #fecfef);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        h1 {
+            font-size: 50px;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            animation: heartbeat 2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .buttons {
+            margin-top: 30px;
+            position: relative;
+        }
+
+        button {
+            font-size: 22px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Dancing Script', cursive;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #yes {
+            background-color: #ff4d79;
+            color: white;
+            transition: all 0.3s ease-in-out;
+        }
+
+        #yes:hover {
+            background-color: #ff1e56;
+            transform: scale(1.1);
+        }
+
+        #no {
+            background-color: #ccc;
+            color: black;
+            position: absolute;
+        }
+
+        #rose {
+            font-size: 100px;
+            margin-top: 20px;
+            display: none;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards, floatUp 2s infinite alternate;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes floatUp {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        /* Floating hearts */
+        .heart {
+            position: absolute;
+            color: #ff4d79;
+            font-size: 24px;
+            animation: float 5s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+
+        /* Sparkle effects */
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: white;
+            opacity: 0.8;
+            border-radius: 50%;
+            animation: sparkle 1.5s infinite;
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Will you be my Valentine, Yasup? ❤️</h1>
+
+    <div class="buttons">
+        <button id="yes" onclick="showLove()">Yes</button>
+        <button id="no" onmouseover="moveButton()">No</button>
+    </div>
+
+    <div id="rose">🌹</div>
+
+    <!-- Romantic background music (optional) -->
+    <audio id="music" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        function moveButton() {
+            let button = document.getElementById("no");
+            let x = Math.random() * (window.innerWidth - 150);
+            let y = Math.random() * (window.innerHeight - 100);
+            button.style.left = x + "px";
+            button.style.top = y + "px";
+        }
+
+        function showLove() {
+            alert('Yay! ❤️');
+            let rose = document.getElementById("rose");
+            rose.style.display = "block";
+
+            createHearts();
+            createSparkles();
+            playMusic();
+        }
+
+        function createHearts() {
+            for (let i = 0; i < 20; i++) {
+                let heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.innerHTML = "❤️";
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.top = Math.random() * 100 + "vh";
+                heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 5000);
+            }
+        }
+
+        function createSparkles() {
+            for (let i = 0; i < 10; i++) {
+                let sparkle = document.createElement("div");
+                sparkle.classList.add("sparkle");
+                sparkle.style.left = Math.random() * 100 + "vw";
+                sparkle.style.top = Math.random() * 100 + "vh";
+                sparkle.style.animationDuration = Math.random() * 1.5 + "s";
+                document.body.appendChild(sparkle);
+
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 1500);
+            }
+        }
+
+        function playMusic() {
+            let music = document.getElementById("music");
+            music.play().catch(() => {
+                console.log("Autoplay prevented, user must interact first.");
+            });
+        }
+    </script>
+
+</body>
+</html>
